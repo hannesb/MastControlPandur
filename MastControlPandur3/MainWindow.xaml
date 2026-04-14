@@ -1,0 +1,69 @@
+﻿<Window 
+    ResxExtension.DefaultResxName="MastControlPandur3.Resources.AppStrings" Language="{UICulture}"
+    Name="mainWindow"
+    x:Class="MastControlPandur3.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:MastControlPandur3"
+    mc:Ignorable="d"
+    Title="{Resx MainWindowTitle}" 
+    Height="800" Width="1000"
+    Closing="mainWindow_Closing"
+    Initialized="mainWindow_Initialized"
+    >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="500" />
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Row="0" Grid.RowSpan="9" Grid.Column="2" Name="listBoxDebug" />
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="MAST Alive message" />
+        <TextBox Grid.Row="0" Grid.Column="1" Name="textBoxAlive" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="MAST MastStatus1" />
+        <TextBox Grid.Row="1" Grid.Column="1" Name="textBoxMastStatus" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="HUMS value" />
+        <TextBox Grid.Row="2" Grid.Column="1" Name="textBoxHUMSValue" />
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="SW version" />
+        <TextBox Grid.Row="3" Grid.Column="1" Name="textBoxSWVersion" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="OptikPod" />
+        <TextBox Grid.Row="4" Grid.Column="1" Name="textBoxOptikPod" />
+
+        <StackPanel Grid.Row="9" Grid.ColumnSpan="3" Orientation="Vertical">
+            <CheckBox Name="checkBoxSync" Content="Send SYNC" IsChecked="True" Margin="2" Click="checkBoxSync_Click" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Blackout/Camouflage:" Margin="2"/>
+                <RadioButton GroupName="blackout" Content="Normal" Margin="2" Name="radioButtonBlackout100" Click="radioButtonBlackout100_Click"/>
+                <RadioButton GroupName="blackout" Content="50%" Margin="2" Name="radioButtonBlackout50" Click="radioButtonBlackout50_Click"/>
+                <RadioButton GroupName="blackout" Content="10%" Margin="2" Name="radioButtonBlackout10" Click="radioButtonBlackout10_Click"/>
+                <CheckBox Name="checkBoxOptikPod" Content="Optik Pod in Home Pos" Margin="20,2,2,2" Click="checkBoxOptikPod_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Read HUMS value 196 " Name="buttonInquire196" Click="buttonInquire196_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxOperatingHours" TextChanged="textBoxOperatingHours_TextChanged" />
+                <Button Margin="2" Content=" Write HUMS value 196 " Name="buttonWrite196" Click="buttonWrite196_Click"/>
+                <Button Margin="2" Content=" Inquire HUMS value 234 " Name="buttonInquire234" Click="buttonInquire234_Click"/>
+                <Button Margin="2" Content=" Request SW Version " Name="buttonRequestSWVersion" Click="buttonRequestSWVersion_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,24 @@
+﻿<Window 
+    ResxExtension.DefaultResxName="MastControlPandur3.Resources.AppStrings" Language="{UICulture}"
+    x:Class="MastControlPandur3.Dialogs.DialogShutdown"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:res="clr-namespace:MastControlPandur3.Resources"
+    Title="{Resx DialogShutdownTitle}"    
+    Height="179" 
+    Width="300" 
+    WindowStartupLocation="CenterOwner" 
+    ResizeMode="NoResize" 
+    ShowInTaskbar="False" 
+    Topmost="True" 
+    >
+    <Grid>
+        <TextBlock 
+            HorizontalAlignment="Center" 
+            Text="{Resx DialogShutdownMessage}" 
+            VerticalAlignment="Center" 
+            TextWrapping="Wrap"
+            Width="200"
+            />
+    </Grid>
+</Window>

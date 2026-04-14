@@ -1,0 +1,648 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CANAvailableHWIDs" xml:space="preserve">
+    <value>Available hw-ids: {0}</value>
+  </data>
+  <data name="CANConnected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="CANConnecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="CANDeviceNotFound" xml:space="preserve">
+    <value>Device with hw-id {0} not found!</value>
+  </data>
+  <data name="CANDisconnected" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="CANDisconnecting" xml:space="preserve">
+    <value>Disconnecting...</value>
+  </data>
+  <data name="CANEmptyDeviceList" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="CANErrorAcknowledge" xml:space="preserve">
+    <value>acknowledgment error...</value>
+  </data>
+  <data name="CANErrorBit" xml:space="preserve">
+    <value>bit error...</value>
+  </data>
+  <data name="CANErrorCRC" xml:space="preserve">
+    <value>CRC error...</value>
+  </data>
+  <data name="CANErrorFilterDisable" xml:space="preserve">
+    <value>Error sending filter disable command</value>
+  </data>
+  <data name="CANErrorForm" xml:space="preserve">
+    <value>form error...</value>
+  </data>
+  <data name="CANErrorInitCmd" xml:space="preserve">
+    <value>Error sending init command</value>
+  </data>
+  <data name="CANErrorOther" xml:space="preserve">
+    <value>other error...</value>
+  </data>
+  <data name="CANErrorReadVersion" xml:space="preserve">
+    <value>Error reading device version</value>
+  </data>
+  <data name="CanErrorSetHeartbeat" xml:space="preserve">
+    <value>Error setting heartbeat</value>
+  </data>
+  <data name="CANErrorStartDevice" xml:space="preserve">
+    <value>Error starting device</value>
+  </data>
+  <data name="CANErrorStopDevice" xml:space="preserve">
+    <value>Error stopping device</value>
+  </data>
+  <data name="CANErrorStuff" xml:space="preserve">
+    <value>stuff error...</value>
+  </data>
+  <data name="CANInitialized" xml:space="preserve">
+    <value>Initialized</value>
+  </data>
+  <data name="CANReconnect" xml:space="preserve">
+    <value>CAN trying reconnection...</value>
+  </data>
+  <data name="CANRemoteFrame" xml:space="preserve">
+    <value>Received remote frame ?!?</value>
+  </data>
+  <data name="CANReset" xml:space="preserve">
+    <value>CAN resetted...</value>
+  </data>
+  <data name="CANRestartSlave" xml:space="preserve">
+    <value>(Re-)starting slave {0}</value>
+  </data>
+  <data name="CANStart" xml:space="preserve">
+    <value>CAN started...</value>
+  </data>
+  <data name="CANStop" xml:space="preserve">
+    <value>CAN stopped...</value>
+  </data>
+  <data name="DialogButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DialogButtonOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="DialogProcVarsTabECU" xml:space="preserve">
+    <value>ECU Process Variables</value>
+  </data>
+  <data name="DialogProcVarsTabMast" xml:space="preserve">
+    <value>Mast Process Variables</value>
+  </data>
+  <data name="DialogProcVarsTitle" xml:space="preserve">
+    <value>Process Variables</value>
+  </data>
+  <data name="DialogPWCaption" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="DialogPWInvalid" xml:space="preserve">
+    <value>Invalid password!</value>
+  </data>
+  <data name="DialogPWTitle" xml:space="preserve">
+    <value>Password required</value>
+  </data>
+  <data name="DialogSettingsInvalidData" xml:space="preserve">
+    <value>Enter valid values before saving!</value>
+  </data>
+  <data name="DialogSettingsTabECU" xml:space="preserve">
+    <value>ECU Settings</value>
+  </data>
+  <data name="DialogSettingsTabMast" xml:space="preserve">
+    <value>Mast Settings</value>
+  </data>
+  <data name="DialogSettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="DialogShutdownMessage" xml:space="preserve">
+    <value>Shutting down CAN driver, this may take a while...</value>
+  </data>
+  <data name="DialogShutdownTitle" xml:space="preserve">
+    <value>Shutdown CAN driver</value>
+  </data>
+  <data name="DialogStartupMessage" xml:space="preserve">
+    <value>Starting CAN driver, this may take a while...</value>
+  </data>
+  <data name="DialogStartupTitle" xml:space="preserve">
+    <value>Starting CAN driver</value>
+  </data>
+  <data name="ECU1" xml:space="preserve">
+    <value>ECU 1</value>
+  </data>
+  <data name="ECU2" xml:space="preserve">
+    <value>ECU 2</value>
+  </data>
+  <data name="ECU3" xml:space="preserve">
+    <value>ECU 3</value>
+  </data>
+  <data name="ECU4" xml:space="preserve">
+    <value>ECU 4</value>
+  </data>
+  <data name="ECU5" xml:space="preserve">
+    <value>ECU 5</value>
+  </data>
+  <data name="ErrorEmergencyStop" xml:space="preserve">
+    <value>ECU {0}: Emergency Stop</value>
+  </data>
+  <data name="ErrorEncoderCanTimeout" xml:space="preserve">
+    <value>Mast {0} Encoder: CAN Timeout</value>
+  </data>
+  <data name="ErrorExtTempSensor" xml:space="preserve">
+    <value>ECU {0}: External temperature sensor: Invalid signal</value>
+  </data>
+  <data name="ErrorIniFile" xml:space="preserve">
+    <value>Cannnot read setting for {0} in section {1} from MastControl.ini</value>
+  </data>
+  <data name="ErrorLocalCAN" xml:space="preserve">
+    <value>ECU {0}: Internal CAN not working</value>
+  </data>
+  <data name="ErrorMastErrorFU" xml:space="preserve">
+    <value>Mast {0} motor controller: Fault</value>
+  </data>
+  <data name="ErrorMastFUCanTimeout" xml:space="preserve">
+    <value>Mast {0} motor controller: CAN timeout</value>
+  </data>
+  <data name="ErrorMastHeightOutOfRange" xml:space="preserve">
+    <value>Mast {0} height sensor: Out of range</value>
+  </data>
+  <data name="ErrorMastLimitSwitchBottom" xml:space="preserve">
+    <value>Mast {0}: Limit switch bottom position</value>
+  </data>
+  <data name="ErrorMastLimitSwitchTop" xml:space="preserve">
+    <value>Mast {0}: Limit switch top position</value>
+  </data>
+  <data name="ErrorMastNotReadyToSwitchOn" xml:space="preserve">
+    <value>Mast {0}: Not ready to switch on</value>
+  </data>
+  <data name="ErrorMastStateMachine" xml:space="preserve">
+    <value>Mast {0}  state machine: Error state {1}</value>
+  </data>
+  <data name="ErrorPositionDifference" xml:space="preserve">
+    <value>Mast {0}: Invalid position difference (absolute encoder / FU)</value>
+  </data>
+  <data name="ErrorTemperatureSensor" xml:space="preserve">
+    <value>ECU {0}: Temperature sensor cabinet: Invalid signal</value>
+  </data>
+  <data name="ErrorWindSensor" xml:space="preserve">
+    <value>ECU {0}: Wind sensor: Invalid signal</value>
+  </data>
+  <data name="MainWindowBlackout" xml:space="preserve">
+    <value>Blackout</value>
+  </data>
+  <data name="MainWindowBottomTabItemDebug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="MainWindowBottomTabItemErrors" xml:space="preserve">
+    <value>Error messages</value>
+  </data>
+  <data name="MainWindowInfoRectErrorLED" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainWindowInfoRectOkLED" xml:space="preserve">
+    <value>Operational</value>
+  </data>
+  <data name="MainWindowMenuExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MainWindowMenuFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="MainWindowMenuLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="MainWindowMenuProcVars" xml:space="preserve">
+    <value>Process Variables</value>
+  </data>
+  <data name="MainWindowMenuSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainWindowMenuShowErrors" xml:space="preserve">
+    <value>Show error messages list</value>
+  </data>
+  <data name="MainWindowMenuTools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="MainWindowMsgECUNotConnected" xml:space="preserve">
+    <value>ECU not connected!</value>
+  </data>
+  <data name="MainWindowSingleInstance" xml:space="preserve">
+    <value>Application already running!</value>
+  </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>Mast Control Pandur V0.1</value>
+  </data>
+  <data name="MainWindowTitleBarCANStatus" xml:space="preserve">
+    <value>CAN-Status</value>
+  </data>
+  <data name="MainWindowTitleBarError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MainWindowTitleBarReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="MainWindowTitleBarWindspeed" xml:space="preserve">
+    <value>Wind speed: {0} km/h</value>
+  </data>
+  <data name="Mast1" xml:space="preserve">
+    <value>Mast 1</value>
+  </data>
+  <data name="Mast2" xml:space="preserve">
+    <value>Mast 2</value>
+  </data>
+  <data name="Mast3" xml:space="preserve">
+    <value>Mast 3</value>
+  </data>
+  <data name="Mast4" xml:space="preserve">
+    <value>Mast 4</value>
+  </data>
+  <data name="Mast5" xml:space="preserve">
+    <value>Mast 5</value>
+  </data>
+  <data name="MastControlledByECU" xml:space="preserve">
+    <value>ECU</value>
+  </data>
+  <data name="MastControlledByNAMEDPIPE" xml:space="preserve">
+    <value>Named Pipe</value>
+  </data>
+  <data name="MastControlledByNONE" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="MastControlledByPC" xml:space="preserve">
+    <value>PC</value>
+  </data>
+  <data name="MsgListDebug" xml:space="preserve">
+    <value>Debug:</value>
+  </data>
+  <data name="MsgListError" xml:space="preserve">
+    <value>Error:</value>
+  </data>
+  <data name="Param2000_1" xml:space="preserve">
+    <value>Maximum windspeed;km/h</value>
+  </data>
+  <data name="Param2000_10" xml:space="preserve">
+    <value>Same time automatic rectracting windspeed;0=OFF 1=ON</value>
+  </data>
+  <data name="Param2000_11" xml:space="preserve">
+    <value>Delay for windspeed;s</value>
+  </data>
+  <data name="Param2000_12" xml:space="preserve">
+    <value>User PW</value>
+  </data>
+  <data name="Param2000_13" xml:space="preserve">
+    <value>Temperature threshold low;°C</value>
+  </data>
+  <data name="Param2000_14" xml:space="preserve">
+    <value>Temperature threshold high;°C</value>
+  </data>
+  <data name="Param2000_2" xml:space="preserve">
+    <value>Lead time warning light;s</value>
+  </data>
+  <data name="Param2000_3" xml:space="preserve">
+    <value>Lead time warning horn;s</value>
+  </data>
+  <data name="Param2000_4" xml:space="preserve">
+    <value>Temperature heating ON;°C</value>
+  </data>
+  <data name="Param2000_5" xml:space="preserve">
+    <value>Temperature heating OFF;°C</value>
+  </data>
+  <data name="Param2000_6" xml:space="preserve">
+    <value>Warning lights during mast movement;0=OFF 1=ON</value>
+  </data>
+  <data name="Param2000_7" xml:space="preserve">
+    <value>Warning lights in camouflage mode;0=OFF 1=ON</value>
+  </data>
+  <data name="Param2000_8" xml:space="preserve">
+    <value>Warning horn during mast movement;0=OFF 1=ON</value>
+  </data>
+  <data name="Param2000_9" xml:space="preserve">
+    <value>Warning horn in camouflage mode;0=OFF 1=ON</value>
+  </data>
+  <data name="Param2001_1" xml:space="preserve">
+    <value>Windspeed 1;km/h</value>
+  </data>
+  <data name="Param2001_2" xml:space="preserve">
+    <value>Windspeed 2;km/h</value>
+  </data>
+  <data name="Param2001_3" xml:space="preserve">
+    <value>Windspeed 3;km/h</value>
+  </data>
+  <data name="Param2001_4" xml:space="preserve">
+    <value>Windspeed 4;km/h</value>
+  </data>
+  <data name="Param2001_5" xml:space="preserve">
+    <value>Windspeed 5;km/h</value>
+  </data>
+  <data name="Param2002_1" xml:space="preserve">
+    <value>Mast 1 maximum height for windspeed 1;m</value>
+  </data>
+  <data name="Param2002_2" xml:space="preserve">
+    <value>Mast 1 maximum height for windspeed 2;m</value>
+  </data>
+  <data name="Param2002_3" xml:space="preserve">
+    <value>Mast 1 maximum height for windspeed 3;m</value>
+  </data>
+  <data name="Param2002_4" xml:space="preserve">
+    <value>Mast 1 maximum height for windspeed 4;m</value>
+  </data>
+  <data name="Param2002_5" xml:space="preserve">
+    <value>Mast 1 maximum height for windspeed 5;m</value>
+  </data>
+  <data name="Param2003_1" xml:space="preserve">
+    <value>Mast 2 maximum height for windspeed 1;m</value>
+  </data>
+  <data name="Param2003_2" xml:space="preserve">
+    <value>Mast 2 maximum height for windspeed 2;m</value>
+  </data>
+  <data name="Param2003_3" xml:space="preserve">
+    <value>Mast 2 maximum height for windspeed 3;m</value>
+  </data>
+  <data name="Param2003_4" xml:space="preserve">
+    <value>Mast 2 maximum height for windspeed 4;m</value>
+  </data>
+  <data name="Param2003_5" xml:space="preserve">
+    <value>Mast 2 maximum height for windspeed 5;m</value>
+  </data>
+  <data name="Param2004" xml:space="preserve">
+    <value>Maximum valid mast height;mm</value>
+  </data>
+  <data name="Param2005" xml:space="preserve">
+    <value>Minimum valid mast height;mm</value>
+  </data>
+  <data name="Param2006" xml:space="preserve">
+    <value>Mast height top position;mm</value>
+  </data>
+  <data name="Param2007" xml:space="preserve">
+    <value>Mast height bottom position;mm</value>
+  </data>
+  <data name="Param2008" xml:space="preserve">
+    <value>Voltage top position;V</value>
+  </data>
+  <data name="Param2009" xml:space="preserve">
+    <value>Voltage bottom position;V</value>
+  </data>
+  <data name="Param200A" xml:space="preserve">
+    <value>Velocity;rpm</value>
+  </data>
+  <data name="Param200B" xml:space="preserve">
+    <value>Velocity slow speed;rpm</value>
+  </data>
+  <data name="Param200C" xml:space="preserve">
+    <value>Velocity bottom;rpm</value>
+  </data>
+  <data name="Param200D" xml:space="preserve">
+    <value>Bottom position offset;mm</value>
+  </data>
+  <data name="Param200E" xml:space="preserve">
+    <value>Current limit bottom;A</value>
+  </data>
+  <data name="Param200F" xml:space="preserve">
+    <value>Bottom limit switch window;mm</value>
+  </data>
+  <data name="Param2010" xml:space="preserve">
+    <value>Encoder offset;mm</value>
+  </data>
+  <data name="Param2011" xml:space="preserve">
+    <value>Mast height medium position;mm</value>
+  </data>
+  <data name="Param2012" xml:space="preserve">
+    <value>Mast medium position window;mm</value>
+  </data>
+  <data name="Param2013" xml:space="preserve">
+    <value>Motor active time;s</value>
+  </data>
+  <data name="Param2014" xml:space="preserve">
+    <value>Adjust encoder, magic word (333777333)</value>
+  </data>
+  <data name="Param2015" xml:space="preserve">
+    <value>Current limit bottom 10..20°C;A</value>
+  </data>
+  <data name="Param2016" xml:space="preserve">
+    <value>Current limit bottom 0..10°C;A</value>
+  </data>
+  <data name="Param2017" xml:space="preserve">
+    <value>Current limit bottom -10..0°C;A</value>
+  </data>
+  <data name="Param2018" xml:space="preserve">
+    <value>Current limit bottom -20..-10°C;A</value>
+  </data>
+  <data name="Param2019" xml:space="preserve">
+    <value>Current limit bottom -30..-20°C;A</value>
+  </data>
+  <data name="Param201A" xml:space="preserve">
+    <value>Bottom window disable current error;1/100mm</value>
+  </data>
+  <data name="Param201B" xml:space="preserve">
+    <value>Current limit bottom &lt; -30°C;A</value>
+  </data>
+  <data name="Param201C" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="Param201D" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="Param201E" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="Param201F" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="Param2020" xml:space="preserve">
+    <value>Velocity up;rpm</value>
+  </data>
+  <data name="Param2021" xml:space="preserve">
+    <value>Velocity down;rpm</value>
+  </data>
+  <data name="Param3000_3" xml:space="preserve">
+    <value>Windspeed;km/h</value>
+  </data>
+  <data name="Param3000_4" xml:space="preserve">
+    <value>Cabinet Temperature;°C</value>
+  </data>
+  <data name="Param3000_5" xml:space="preserve">
+    <value>External Temperature;°C</value>
+  </data>
+  <data name="Param3000_6" xml:space="preserve">
+    <value>Internal Voltage;V</value>
+  </data>
+  <data name="Param3001" xml:space="preserve">
+    <value>Height;mm</value>
+  </data>
+  <data name="Param3002" xml:space="preserve">
+    <value>Speed;mm/s</value>
+  </data>
+  <data name="Param3005" xml:space="preserve">
+    <value>Voltage;V</value>
+  </data>
+  <data name="Param3006" xml:space="preserve">
+    <value>Current;A</value>
+  </data>
+  <data name="Param3007" xml:space="preserve">
+    <value>Torque;Nm</value>
+  </data>
+  <data name="Param3008" xml:space="preserve">
+    <value>Load;%</value>
+  </data>
+  <data name="Param3009" xml:space="preserve">
+    <value>Height sensor;V</value>
+  </data>
+  <data name="Param300A" xml:space="preserve">
+    <value>Temperature Power Stage;°C</value>
+  </data>
+  <data name="Param300B" xml:space="preserve">
+    <value>Temperature Controller;°C</value>
+  </data>
+  <data name="Param300C" xml:space="preserve">
+    <value>Zwischenkreisspannung;V</value>
+  </data>
+  <data name="Param300E" xml:space="preserve">
+    <value>Startup error code</value>
+  </data>
+  <data name="Param300F" xml:space="preserve">
+    <value>Temperature Amplifier;°C</value>
+  </data>
+  <data name="Param3010" xml:space="preserve">
+    <value>FU error code</value>
+  </data>
+  <data name="Param3011" xml:space="preserve">
+    <value>Encoder digits</value>
+  </data>
+  <data name="Param3012" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Param3013" xml:space="preserve">
+    <value>Velocity;rpm</value>
+  </data>
+  <data name="Param3014" xml:space="preserve">
+    <value>Motor active time;s</value>
+  </data>
+  <data name="Param3015" xml:space="preserve">
+    <value>Height;1/100mm</value>
+  </data>
+  <data name="Param3020_1" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Param3020_2" xml:space="preserve">
+    <value>Build date</value>
+  </data>
+  <data name="SlowSpeed" xml:space="preserve">
+    <value>Slow</value>
+  </data>
+</root>
