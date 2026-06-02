@@ -346,7 +346,7 @@
     <value>Application already running!</value>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
-    <value>Mast Control Pandur V0.1</value>
+    <value>Mast Control Pandur V0.5</value>
   </data>
   <data name="MainWindowTitleBarCANStatus" xml:space="preserve">
     <value>CAN-Status</value>

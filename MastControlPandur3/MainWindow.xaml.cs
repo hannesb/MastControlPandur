@@ -40,6 +40,53 @@ namespace MastControlPandur3
         private MMTimer.UserTimeProc _timeProc = null;
         private bool sendSync = true;
         private bool optikPodStatus = false;
+        private int readParamIdx = 0;
+        private uint operatingHours = 0;
+        private uint hK = 0;
+        private uint mastVariant = 0;
+
+        private List<Parameter> parameters = new List<Parameter> {
+            new Parameter("8m", false, 0, 0, "Top Position", "mm"),
+            new Parameter("8m", false, 0, 1, "Bottom Position", "mm"),
+            new Parameter("8m", false, 0, 2, "Bottom Position Offset", "mm"),
+            new Parameter("8m", false, 0, 3, "Current Limit Bottom", "A"),
+            new Parameter("8m", false, 0, 4, "Bottom Limit Switch Window", "mm"),
+            new Parameter("8m", false, 0, 5, "Velocity UP", "rpm"),
+            new Parameter("8m", false, 0, 6, "Velocity DOWN", "rpm"),
+            new Parameter("8m", false, 0, 7, "Velocity SLOW", "rpm"),
+            new Parameter("8m", false, 0, 8, "Velocity BOTTOM", "rpm"),
+            new Parameter("8m", false, 0, 9, "Middle Position", "mm"),
+            new Parameter("8m", false, 0, 10, "Middle Position Window", "mm"),
+            new Parameter("8m", false, 0, 11, "OptikPod Position", "mm"),
+
+            new Parameter("5m", false, 1, 0, "Top Position", "mm"),
+            new Parameter("5m", false, 1, 1, "Bottom Position", "mm"),
+            new Parameter("5m", false, 1, 2, "Bottom Position Offset", "mm"),
+            new Parameter("5m", false, 1, 3, "Current Limit Bottom", "A"),
+            new Parameter("5m", false, 1, 4, "Bottom Limit Switch Window", "mm"),
+            new Parameter("5m", false, 1, 5, "Velocity UP", "rpm"),
+            new Parameter("5m", false, 1, 6, "Velocity DOWN", "rpm"),
+            new Parameter("5m", false, 1, 7, "Velocity SLOW", "rpm"),
+            new Parameter("5m", false, 1, 8, "Velocity BOTTOM", "rpm"),
+            new Parameter("5m", false, 1, 9, "Middle Position", "mm"),
+            new Parameter("5m", false, 1, 10, "Middle Position Window", "mm"),
+            new Parameter("5m", false, 1, 11, "OptikPod Position", "mm"),
+
+            new Parameter("Aufkl", true, 2, 0, "Offset Fahrzeug", "mm"),
+            new Parameter("Aufkl", true, 2, 1, "Länge Kopflast", "mm"),
+
+            new Parameter("JFS", true, 3, 0, "Offset Fahrzeug", "mm"),
+            new Parameter("JFS", true, 3, 1, "Länge Kopflast", "mm"),
+
+            new Parameter("NeFuE", true, 4, 0, "Offset Fahrzeug", "mm"),
+            new Parameter("NeFuE", true, 4, 1, "Länge Kopflast", "mm"),
+
+            new Parameter("ERFOS", true, 5, 0, "Offset Fahrzeug", "mm"),
+            new Parameter("ERFOS", true, 5, 1, "Länge Kopflast", "mm"),
+
+            new Parameter("STÖRSYS", true, 6, 0, "Offset Fahrzeug", "mm"),
+            new Parameter("STÖRSYS", true, 6, 1, "Länge Kopflast", "mm"),
+        };
 
         public MainWindow()
         {
@@ -52,14 +99,16 @@ namespace MastControlPandur3
             _canHandler.Disconnected += CanHandler_Disconnected; ;
             _canHandler.ConnectionFailed += CanHandler_ConnectionFailed; ;
 
-            //_canHandler.Initialize("any", CAN.BitRate.R500, _errorMsgQueue, _debugMsgQueue);
-            _canHandler.Initialize("any", CAN.BitRate.R125, _errorMsgQueue, _debugMsgQueue);
+            _canHandler.Initialize("any", CAN.BitRate.R500, _errorMsgQueue, _debugMsgQueue);
+            //_canHandler.Initialize("any", CAN.BitRate.R125, _errorMsgQueue, _debugMsgQueue);
 
             _timeProc = new MMTimer.UserTimeProc(TimerCallback);
             _mmTimer.Start(_timeProc, ZYKLUSZEITMS, MMTimer.TimerMode.Periodic);
 
             _dispatcherTimer.Tick += _dispatcherTimer_Tick1; ;
             _dispatcherTimer.Start();
+
+            dataGridParameter.ItemsSource = parameters;
         }
 
         private void TimerCallback()
@@ -69,6 +118,14 @@ namespace MastControlPandur3
             if (mainWindow._canHandler.Status == CAN.CanHandlerStatus.Connected) {
                 if (mainWindow.sendSync) {
                     mainWindow._canHandler.SendMsg(0x02008001, BitConverter.GetBytes(mainWindow._syncOffset));
+                    if (readParamIdx < parameters.Count) {
+                        var para = parameters[readParamIdx++];
+                        var bytes = new byte[] {
+                            0x22, 0xC0, 0x07, para.HPN,
+                            0xFF, 0xFF, 0xFF, 0xFF
+                        };
+                        mainWindow._canHandler.SendMsg(0x1E650201, bytes);
+                    }
                 }
             }
             if (mainWindow._syncOffset == 1024) {
@@ -232,15 +289,39 @@ namespace MastControlPandur3
                     if (len == 8) {
                         DebugMsg($"0x1E660003 hums {s}");
                         Dispatcher.Invoke(new Action(() => {
-                            var seconds = data[4] + (data[5] << 8) + (data[6] << 16) + (data[7] << 24);
-                            textBoxHUMSValue.Text = 
-                                $"HPN = {data[0] + (data[1] << 8) + ((data[2] & 0x07) << 16):X}" +
-                                $"\nDevice = {data[2] >> 3}" +
-                                $"\nHTI = {data[3]}" +
-                                $"\nHUMS Value = {seconds}" +
-                                $"";
-                            if (data[3] == 196) {
-                                textBoxOperatingHours.Text = seconds.ToString();
+                            var hpn = data[0] + (data[1] << 8) + ((data[2] & 0x07) << 16);
+                            switch (hpn) {
+                                case 0x07C020:
+                                case 0x07C021:
+                                    var tmp = data[4] + (data[5] << 8) + (data[6] << 16) + (data[7] << 24);
+                                    textBoxHUMSValue.Text =
+                                        $"HPN = {hpn:X}" +
+                                        $"\nDevice = {data[2] >> 3}" +
+                                        $"\nHTI = {data[3]}" +
+                                        $"\nHUMS Value = {tmp}" +
+                                        $"";
+                                    if (hpn == 0x07C020 && data[3] == 196) {
+                                        textBoxOperatingHours.Text = tmp.ToString();
+                                    }
+                                    if (hpn == 0x07C020 && data[3] == 234) {
+                                        textBoxHMax.Text = tmp.ToString();
+                                    }
+                                    if (hpn == 0x07C020 && data[3] == 235) {
+                                        textBoxMastEncoderHeight.Text = tmp.ToString();
+                                    }
+                                    if (hpn == 0x07C021 && data[3] == 234) {
+                                        textBoxHK.Text = tmp.ToString();
+                                    }
+                                    if (hpn == 0x07C020 && data[3] == 194) {
+                                        textBoxMastVariant.Text = tmp.ToString();
+                                    }
+                                    break;
+                                case 0x07C022:
+                                    var param = parameters.Where(r => r.HPN == data[3]).FirstOrDefault();
+                                    if (param != null) {
+                                        param.Wert = (ushort)(data[4] + (data[5] << 8));
+                                    }
+                                    break;
                             }
                         }));
                     }
@@ -355,6 +436,29 @@ namespace MastControlPandur3
             sendMastControl(0b11111011);
         }
 
+        private void checkBoxOptikPod_Click(object sender, RoutedEventArgs e)
+        {
+            optikPodStatus = checkBoxOptikPod.IsChecked == true;
+        }
+
+        private void buttonSaveParam_Click(object sender, RoutedEventArgs e)
+        {
+            var para = ((Button)sender).CommandParameter as Parameter;
+            if (para.NeuerWert != null) {
+                var bytes = new byte[] {
+                    0x22, 0xC0, 0x07, para.HPN,
+                    (byte)(para.NeuerWert), (byte)(para.NeuerWert >> 8), 0x00, 0x00
+                };
+                _canHandler.SendMsg(0x1E650201, bytes);
+                readParamIdx = 0;
+            }
+        }
+
+        private void buttonRequestSWVersion_Click(object sender, RoutedEventArgs e)
+        {
+            _canHandler.SendMsg(0x1F656201, new byte[0]);
+        }
+
         private void setInquireHUMS(int HPN, byte HTI, uint value = 0xFFFFFFFF)
         {
             var data = new byte[] {
@@ -377,19 +481,22 @@ namespace MastControlPandur3
 
         private void buttonInquire234_Click(object sender, RoutedEventArgs e)
         {
+            setInquireHUMS(0x07C020, 234);
+        }
+
+        private void buttonInquire235_Click(object sender, RoutedEventArgs e)
+        {
+            setInquireHUMS(0x07C020, 235);
+        }
+
+        private void buttonInquire234a_Click(object sender, RoutedEventArgs e)
+        {
             setInquireHUMS(0x07C021, 234);
         }
 
-        private void buttonRequestSWVersion_Click(object sender, RoutedEventArgs e)
+        private void buttonInquire194_Click(object sender, RoutedEventArgs e)
         {
-            _canHandler.SendMsg(0x1F656201, new byte[0]);
-        }
-
-        uint operatingHours = 0;
-
-        private void textBoxOperatingHours_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            uint.TryParse(textBoxOperatingHours.Text, out operatingHours);
+            setInquireHUMS(0x07C020, 194);
         }
 
         private void buttonWrite196_Click(object sender, RoutedEventArgs e)
@@ -397,9 +504,30 @@ namespace MastControlPandur3
             setInquireHUMS(0x07C020, 196, operatingHours);
         }
 
-        private void checkBoxOptikPod_Click(object sender, RoutedEventArgs e)
+        private void buttonWrite234a_Click(object sender, RoutedEventArgs e)
         {
-            optikPodStatus = checkBoxOptikPod.IsChecked == true;
+            setInquireHUMS(0x07C021, 234, hK);
         }
+
+        private void buttonWrite194_Click(object sender, RoutedEventArgs e)
+        {
+            setInquireHUMS(0x07C020, 194, mastVariant);
+        }
+
+        private void textBoxOperatingHours_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            uint.TryParse(textBoxOperatingHours.Text, out operatingHours);
+        }
+
+        private void textBoxHK_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            uint.TryParse(textBoxHK.Text, out hK);
+        }
+
+        private void textBoxMastVariant_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            uint.TryParse(textBoxMastVariant.Text, out mastVariant);
+        }
+
     }
 }

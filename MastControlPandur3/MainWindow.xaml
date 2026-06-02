@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:MastControlPandur3"
     mc:Ignorable="d"
     Title="{Resx MainWindowTitle}" 
-    Height="800" Width="1000"
+    Height="800" Width="1100"
     Closing="mainWindow_Closing"
     Initialized="mainWindow_Initialized"
     >
@@ -31,7 +31,35 @@
             <ColumnDefinition />
             <ColumnDefinition Width="500" />
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Row="0" Grid.RowSpan="9" Grid.Column="2" Name="listBoxDebug" />
+        <TabControl Grid.Row="0" Grid.RowSpan="100" Grid.Column="2">
+            <TabItem Header="Parameter / HUMS">
+                <DataGrid 
+                    Name="dataGridParameter"
+                    AutoGenerateColumns="False"
+                    >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Typ" Binding="{Binding Typ}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Wert" Binding="{Binding Wert}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Einheit" Binding="{Binding Einheit}" IsReadOnly="True" />
+                        <DataGridTextColumn 
+                            Header="Neuer Wert" 
+                            Binding="{Binding NeuerWert, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" 
+                            />
+                        <DataGridTemplateColumn Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Name="buttonSaveParam" Content="Speichern" Margin="0" CommandParameter="{Binding}" Click="buttonSaveParam_Click" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Debug">
+                <ListBox Name="listBoxDebug" />
+            </TabItem>
+        </TabControl>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="MAST Alive message" />
         <TextBox Grid.Row="0" Grid.Column="1" Name="textBoxAlive" />
@@ -48,7 +76,7 @@
         <TextBlock Grid.Row="4" Grid.Column="0" Text="OptikPod" />
         <TextBox Grid.Row="4" Grid.Column="1" Name="textBoxOptikPod" />
 
-        <StackPanel Grid.Row="9" Grid.ColumnSpan="3" Orientation="Vertical">
+        <StackPanel Grid.Row="9" Grid.ColumnSpan="2" Orientation="Vertical">
             <CheckBox Name="checkBoxSync" Content="Send SYNC" IsChecked="True" Margin="2" Click="checkBoxSync_Click" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Blackout/Camouflage:" Margin="2"/>
@@ -58,11 +86,35 @@
                 <CheckBox Name="checkBoxOptikPod" Content="Optik Pod in Home Pos" Margin="20,2,2,2" Click="checkBoxOptikPod_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Margin="2" Content=" Read HUMS value 196 " Name="buttonInquire196" Click="buttonInquire196_Click"/>
-                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxOperatingHours" TextChanged="textBoxOperatingHours_TextChanged" />
-                <Button Margin="2" Content=" Write HUMS value 196 " Name="buttonWrite196" Click="buttonWrite196_Click"/>
-                <Button Margin="2" Content=" Inquire HUMS value 234 " Name="buttonInquire234" Click="buttonInquire234_Click"/>
                 <Button Margin="2" Content=" Request SW Version " Name="buttonRequestSWVersion" Click="buttonRequestSWVersion_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Read Operating seconds " Name="buttonInquire196" Click="buttonInquire196_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxOperatingHours" TextChanged="textBoxOperatingHours_TextChanged" />
+                <Label Content="s" />
+                <Button Margin="2" Content=" Write Operating seconds " Name="buttonWrite196" Click="buttonWrite196_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Read hMax " Name="buttonInquire234" Click="buttonInquire234_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxHMax" />
+                <Label Content="1/10 mm" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Read MastEncoderHeight " Name="buttonInquire235" Click="buttonInquire235_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxMastEncoderHeight" />
+                <Label Content="1/10 mm" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Read hK (ICD Antenna) " Name="buttonInquire234a" Click="buttonInquire234a_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxHK" TextChanged="textBoxHK_TextChanged" />
+                <Label Content="1/10 mm" />
+                <Button Margin="2" Content=" Write hK (ICD Antenna) " Name="buttonWrite234a" Click="buttonWrite234a_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Read Mast Variant " Name="buttonInquire194" Click="buttonInquire194_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxMastVariant" TextChanged="textBoxMastVariant_TextChanged" />
+                <Label Content="2=Aufkl 3=JFS 4=NeFuE 5=ERFOS 6=STÖRSYS" />
+                <Button Margin="2" Content=" Write Mast Variant " Name="buttonWrite194" Click="buttonWrite194_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
