@@ -25,27 +25,29 @@ namespace MastControlPandur3
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ConcurrentQueue<string> _debugMsgQueue = new ConcurrentQueue<string>();
-        private ConcurrentQueue<string> _errorMsgQueue = new ConcurrentQueue<string>();
-        private MMTimer _mmTimer = new MMTimer();
-        private DispatcherTimer _dispatcherTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 50) };
+        private readonly ConcurrentQueue<string> _debugMsgQueue = new ConcurrentQueue<string>();
+        private readonly ConcurrentQueue<string> _errorMsgQueue = new ConcurrentQueue<string>();
+        private readonly MMTimer _mmTimer = new MMTimer();
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0, 50) };
+        private readonly CAN.ICAN _canHandler = null;
+        private readonly MMTimer.UserTimeProc _timeProc = null;
         private Int16 _syncOffset = 0;
         private int _cntCANStarted = 0;
         private int _cntCANClosed = 0;
         private Dialogs.DialogStartup _dlgStartup = null;
         private Dialogs.DialogShutdown _dlgShutdown;
-        private CAN.ICAN _canHandler = null;
         private const int ZYKLUSZEITMS = 8;
         // private int _cnt1s = 1000 / ZYKLUSZEITMS;
-        private MMTimer.UserTimeProc _timeProc = null;
         private bool sendSync = true;
         private bool optikPodStatus = false;
         private int readParamIdx = 0;
         private uint operatingHours = 0;
         private uint hK = 0;
         private uint mastVariant = 0;
+        private bool setMastEncoder = false;
+        private bool queryMastEncoderStatus = false;
 
-        private List<Parameter> parameters = new List<Parameter> {
+        private readonly List<Parameter> parameters = new List<Parameter> {
             new Parameter("8m", false, 0, 0, "Top Position", "mm"),
             new Parameter("8m", false, 0, 1, "Bottom Position", "mm"),
             new Parameter("8m", false, 0, 2, "Bottom Position Offset", "mm"),
@@ -105,7 +107,7 @@ namespace MastControlPandur3
             _timeProc = new MMTimer.UserTimeProc(TimerCallback);
             _mmTimer.Start(_timeProc, ZYKLUSZEITMS, MMTimer.TimerMode.Periodic);
 
-            _dispatcherTimer.Tick += _dispatcherTimer_Tick1; ;
+            _dispatcherTimer.Tick += DispatcherTimer_Tick1; ;
             _dispatcherTimer.Start();
 
             dataGridParameter.ItemsSource = parameters;
@@ -134,6 +136,21 @@ namespace MastControlPandur3
             } else {
                 mainWindow._syncOffset += 1;
             }
+            if (queryMastEncoderStatus) {
+                // HPN (HUMS Parameter Number) = 0x07C021
+                // HTI (HUMS Type Index) = 194: various counts
+                // Magic Word = 0x13E509B5 (333777333 dez.)
+                var bytes = new byte[] {
+                    0x21, 0xC0, 0x07, 194,
+                    0xFF, 0xFF, 0xFF, 0xFF
+                };
+                var bytesSet = new byte[] {
+                    0x21, 0xC0, 0x07, 194,
+                    0xB5, 0x09, 0xE5, 0x13
+                };
+                mainWindow._canHandler.SendMsg(0x1E650201, setMastEncoder ? bytesSet : bytes);
+                setMastEncoder = false;
+            }
             //if (mainWindow._cnt1s == 0) {
             //    mainWindow._debugMsgQueue.Enqueue("1s");
             //    mainWindow._cnt1s = 1000 / ZYKLUSZEITMS;
@@ -144,37 +161,33 @@ namespace MastControlPandur3
             // mainWindow._timer.Change(ZYKLUSZEITMS, Timeout.Infinite);
         }
 
-        private void mainWindow_Initialized(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _mmTimer.Stop();
 
             _cntCANClosed = 0;
             if (_canHandler != null && _canHandler.Status == CAN.CanHandlerStatus.Connected) {
                 _canHandler.Disconnect();
-                _canHandler.Closed += _canHandler_Closed; ;
+                _canHandler.Closed += CanHandler_Closed; ;
 
                 e.Cancel = true;
                 _cntCANClosed += 1;
             }
             if (e.Cancel) {
-                _dlgShutdown = new Dialogs.DialogShutdown();
-                _dlgShutdown.Owner = this;
+                _dlgShutdown = new Dialogs.DialogShutdown {
+                    Owner = this
+                };
                 _dlgShutdown.Show();
             }
         }
 
-        private void _canHandler_Closed(object sender, EventArgs e)
+        private void CanHandler_Closed(object sender, EventArgs e)
         {
             _cntCANClosed -= 1;
             if (_cntCANClosed == 0) {
                 Dispatcher.Invoke(new Action(() => {
                     _dlgShutdown.Close();
-                    this.Close();
+                    Close();
                 }));
             }
         }
@@ -207,8 +220,9 @@ namespace MastControlPandur3
         {
             _cntCANStarted += 1;
             if (_dlgStartup == null) {
-                _dlgStartup = new Dialogs.DialogStartup();
-                _dlgStartup.Owner = this;
+                _dlgStartup = new Dialogs.DialogStartup {
+                    Owner = this
+                };
                 _dlgStartup.Show();
             }
             canHandler.Connect();
@@ -225,7 +239,7 @@ namespace MastControlPandur3
             }
         }
 
-        private string Data2Hex(int len, byte[] data)
+        private string Data2Hex(byte[] data)
         {
             return string.Join(" ", data.Select(d => $"{d:X2}"));
         }
@@ -246,7 +260,7 @@ namespace MastControlPandur3
 
         private void ProcessCanMsg(int canId, int len, byte[] data)
         {
-            var s = Data2Hex(len, data);
+            var s = Data2Hex(data);
             switch (canId) {
                 case 0x1E620303:
                     // Alive message
@@ -309,15 +323,21 @@ namespace MastControlPandur3
                                     if (hpn == 0x07C020 && data[3] == 235) {
                                         textBoxMastEncoderHeight.Text = tmp.ToString();
                                     }
-                                    if (hpn == 0x07C021 && data[3] == 234) {
-                                        textBoxHK.Text = tmp.ToString();
-                                    }
                                     if (hpn == 0x07C020 && data[3] == 194) {
                                         textBoxMastVariant.Text = tmp.ToString();
                                     }
+                                    if (hpn == 0x07C021 && data[3] == 234) {
+                                        textBoxHK.Text = tmp.ToString();
+                                    }
+                                    if (hpn == 0x07C021 && data[3] == 194) {
+                                        textBoxSetMastEncoderStatus.Text = tmp.ToString();
+                                        if (tmp == 0) {
+                                            queryMastEncoderStatus = false;
+                                        }
+                                    }
                                     break;
                                 case 0x07C022:
-                                    var param = parameters.Where(r => r.HPN == data[3]).FirstOrDefault();
+                                    var param = parameters.FirstOrDefault(r => r.HPN == data[3]);
                                     if (param != null) {
                                         param.Wert = (ushort)(data[4] + (data[5] << 8));
                                     }
@@ -370,7 +390,7 @@ namespace MastControlPandur3
             }
         }
 
-        private void _dispatcherTimer_Tick1(object sender, EventArgs e)
+        private void DispatcherTimer_Tick1(object sender, EventArgs e)
         {
             string msg;
             while (_debugMsgQueue.TryDequeue(out msg)) {
@@ -529,5 +549,10 @@ namespace MastControlPandur3
             uint.TryParse(textBoxMastVariant.Text, out mastVariant);
         }
 
+        private void buttonSetMastEncoder_Click(object sender, RoutedEventArgs e)
+        {
+            setMastEncoder = true;
+            queryMastEncoderStatus = true;
+        }
     }
 }

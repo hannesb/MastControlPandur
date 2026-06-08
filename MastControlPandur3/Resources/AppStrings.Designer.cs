@@ -745,7 +745,7 @@ namespace MastControlPandur3.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Mast Control Pandur V0.5 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mast Control Pandur V0.6 ähnelt.
         /// </summary>
         internal static string MainWindowTitle {
             get {

@@ -10,8 +10,7 @@
     mc:Ignorable="d"
     Title="{Resx MainWindowTitle}" 
     Height="800" Width="1100"
-    Closing="mainWindow_Closing"
-    Initialized="mainWindow_Initialized"
+    Closing="MainWindow_Closing"
     >
     <Grid>
         <Grid.RowDefinitions>
@@ -115,6 +114,10 @@
                 <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxMastVariant" TextChanged="textBoxMastVariant_TextChanged" />
                 <Label Content="2=Aufkl 3=JFS 4=NeFuE 5=ERFOS 6=STÖRSYS" />
                 <Button Margin="2" Content=" Write Mast Variant " Name="buttonWrite194" Click="buttonWrite194_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="2" Content=" Zero mast encoder " Name="buttonSetMastEncoder" Click="buttonSetMastEncoder_Click"/>
+                <TextBox Margin="2" MinWidth="60" TextAlignment="Center" Name="textBoxSetMastEncoderStatus" IsReadOnly="True"/>
             </StackPanel>
         </StackPanel>
     </Grid>
